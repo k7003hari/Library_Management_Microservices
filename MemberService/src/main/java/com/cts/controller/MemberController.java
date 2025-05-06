@@ -2,43 +2,63 @@ package com.cts.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cts.dto.MemberDTO;
 import com.cts.model.Member;
 import com.cts.service.MemberService;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
-@RequestMapping("/api/members")
-@RequiredArgsConstructor
+@RequestMapping("/members")
 public class MemberController {
-    private final MemberService memberService;
  
-    @GetMapping
-    public List<Member> getAllMembers() {
-        return memberService.getAllMembers();
-    }
+    @Autowired
+    private MemberService memberService;
  
-    @PostMapping("addmember")
-    public Member addMember(@RequestBody Member member) {
-        return memberService.addMember(member);
+    @PostMapping
+    public ResponseEntity<Member> addMember(@RequestBody MemberDTO dto) {
+        return ResponseEntity.ok(memberService.addMember(dto));
     }
  
     @PutMapping("/{id}")
-    public Member updateMember(@PathVariable Long id, @RequestBody Member member) {
-        return memberService.updateMember(id, member);
+    public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
+        return ResponseEntity.ok(memberService.updateMember(id, dto));
     }
  
     @DeleteMapping("/{id}")
-    public void deleteMember(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
+        return ResponseEntity.noContent().build();
+    }
+ 
+    @GetMapping("/{id}")
+    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.getMemberById(id));
+    }
+ 
+    @GetMapping
+    public ResponseEntity<List<Member>> getAllMembers() {
+        return ResponseEntity.ok(memberService.getAllMembers());
+    }
+ 
+    @GetMapping("/{id}/exists")
+    public ResponseEntity<Boolean> isMemberExists(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.isMemberExists(id));
+    }
+ 
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Member> changeMembershipStatus(@PathVariable Long id, @RequestParam String status) {
+        return ResponseEntity.ok(memberService.changeMembershipStatus(id, status));
     }
 }

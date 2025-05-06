@@ -1,46 +1,40 @@
 package com.cts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.cts.exception.BookNotFoundException;
+import org.mockito.Mockito;
+import com.cts.dto.BookDTO;
 import com.cts.model.Book;
 import com.cts.repository.BookRepository;
 import com.cts.service.BookService;
-
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+import com.cts.service.BookServiceImpl;
+ 
 public class BookServiceApplicationTests {
  
-    @Mock
-    private BookRepository bookRepository;
- 
-    @InjectMocks
-    private BookService bookService;
+    private final BookRepository bookRepository = mock(BookRepository.class);
+    private final BookService bookService = new BookServiceImpl(bookRepository);
  
     @Test
     public void testAddBook() {
-        Book book = new Book(null, "Title", "Author", "Genre", "ISBN", 2022, 5);
-        when(bookRepository.save(any(Book.class))).thenReturn(book);
-        Book result = bookService.addBook(book);
-        assertEquals("Title", result.getTitle());
+        BookDTO dto = BookDTO.builder().title("Sample").author("Author").genre("Fiction").isbn("12345").yearPublished(2020).availableCopies(3).build();
+        Book book = Book.builder().bookId(1L).title(dto.getTitle()).author(dto.getAuthor()).genre(dto.getGenre()).isbn(dto.getIsbn()).yearPublished(dto.getYearPublished()).availableCopies(dto.getAvailableCopies()).build();
+        when(bookRepository.save(Mockito.any())).thenReturn(book);
+        Book result = bookService.addBook(dto);
+        assertNotNull(result);
+        assertEquals("Sample", result.getTitle());
     }
  
     @Test
-    public void testUpdateBook_NotFound() {
+    public void testGetBookById_NotFound() {
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
-        Book book = new Book();
-        assertThrows(BookNotFoundException.class, () -> bookService.updateBook(1L, book));
+        assertThrows(RuntimeException.class, () -> bookService.getBookById(1L));
     }
 }
+ 

@@ -10,6 +10,9 @@ public interface BookService {
     Book updateBook(Long bookId, BookDTO bookDTO);
     void deleteBook(Long bookId);
     Book getBookById(Long bookId);
+    boolean existsById(Long bookId);
+    
+    boolean isBookAvailable(Long bookId);
     List<Book> getAllBooks();
     List<Book> searchByTitle(String title);
     List<Book> searchByAuthor(String author);

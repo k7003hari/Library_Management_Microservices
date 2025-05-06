@@ -63,6 +63,18 @@ public class BookServiceImpl implements BookService {
     }
  
     @Override
+    public boolean existsById(Long bookId) {
+        return bookRepository.existsById(bookId);
+    }
+     
+    @Override
+    public boolean isBookAvailable(Long bookId) {
+        return bookRepository.findById(bookId)
+                .map(book -> book.getAvailableCopies() > 0)
+                .orElse(false);
+    }
+    
+    @Override
     public List<Book> searchByTitle(String title) {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }

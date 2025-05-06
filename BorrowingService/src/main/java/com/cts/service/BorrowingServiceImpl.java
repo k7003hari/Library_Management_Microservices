@@ -1,99 +1,71 @@
 package com.cts.service;
 
-import java.awt.print.Book;
-import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cts.exception.TransactionNotFoundException;
-import com.cts.feignClient.BookClient;
-import com.cts.feignClient.MemberClient;
+import com.cts.dto.BorrowingDTO;
+import com.cts.exception.BorrowingNotFoundException;
 import com.cts.model.BorrowingTransaction;
-import com.cts.repository.BorrowingTransactionRepository;
+import com.cts.repository.BorrowingRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class BorrowingServiceImpl implements BorrowingService {
  
-    @Autowired
-    private BorrowingTransactionRepository transactionRepository;
- 
-    @Autowired
-    private BookClient bookClient;
-     
-    @Autowired
-    private MemberClient memberClient;
- 
-    private static final int MAX_BORROW_LIMIT = 5;
+    private final BorrowingRepository borrowingRepository;
  
     @Override
-    public BorrowingTransaction borrowBook(Long memberId, Long bookId) {
-        Book book = bookclient.findById(bookId)
-            .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + bookId));
- 
-        if (book.getAvailableCopies() <= 0) {
-            throw new RuntimeException("Book is currently unavailable.");
-        }
- 
-        Member member = memberclient.findById(memberId)
-            .orElseThrow(() -> new MemberNotFoundException("Member not found with ID: " + memberId));
- 
-        long currentBorrowCount = transactionRepository.countByMemberIdAndStatus(memberId, "BORROWED");
-        if (currentBorrowCount >= MAX_BORROW_LIMIT) {
-            throw new RuntimeException("Borrowing limit reached.");
-        }
- 
-        BorrowingTransaction transaction = new BorrowingTransaction();
-        transaction.setBook(book);
-        transaction.setMember(member);
-        transaction.setBorrowDate(LocalDate.now());
-        transaction.setStatus("BORROWED");
- 
-        book.setAvailableCopies(book.getAvailableCopies() - 1);
-        bookclient.save(book);
-        return transactionRepository.save(transaction);
+    public BorrowingTransaction borrowBook(BorrowingDTO dto) {
+        BorrowingTransaction transaction = BorrowingTransaction.builder()
+                .bookId(dto.getBookId())
+                .memberId(dto.getMemberId())
+                .borrowDate(LocalDate.now())
+                .status("Borrowed")
+                .build();
+        return borrowingRepository.save(transaction);
     }
  
     @Override
     public BorrowingTransaction returnBook(Long transactionId) {
-        BorrowingTransaction transaction = transactionRepository.findById(transactionId)
-            .orElseThrow(() -> new TransactionNotFoundException("Transaction not found: " + transactionId));
- 
-        if (!"BORROWED".equals(transaction.getStatus())) {
-            throw new RuntimeException("Book already returned or invalid status.");
-        }
+        BorrowingTransaction transaction = borrowingRepository.findById(transactionId)
+                .orElseThrow(() -> new BorrowingNotFoundException("Transaction not found with ID: " + transactionId));
  
         transaction.setReturnDate(LocalDate.now());
-        transaction.setStatus("RETURNED");
+        transaction.setStatus("Returned");
  
-        Book book = transaction.getBook();
-        book.setAvailableCopies(book.getAvailableCopies() + 1);
-        bookclient.save(book);
- 
-        return transactionRepository.save(transaction);
+        return borrowingRepository.save(transaction);
     }
  
     @Override
     public BorrowingTransaction getTransactionById(Long transactionId) {
-        return transactionRepository.findById(transactionId)
-            .orElseThrow(() -> new TransactionNotFoundException("Transaction not found: " + transactionId));
-    }
- 
-    @Override
-    public List<BorrowingTransaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        return borrowingRepository.findById(transactionId)
+                .orElseThrow(() -> new BorrowingNotFoundException("Transaction not found with ID: " + transactionId));
     }
  
     @Override
     public List<BorrowingTransaction> getTransactionsByMemberId(Long memberId) {
-        return transactionRepository.findByMemberId(memberId);
+        return borrowingRepository.findByMemberId(memberId);
     }
  
     @Override
-    public List<BorrowingTransaction> getBorrowedBooksByBookId(Long bookId) {
-        return transactionRepository.findByBookIdAndStatus(bookId, "BORROWED");
+    public List<BorrowingTransaction> getTransactionsByBookId(Long bookId) {
+        return borrowingRepository.findByBookId(bookId);
+    }
+ 
+    @Override
+    public List<BorrowingTransaction> getAllTransactions() {
+        return borrowingRepository.findAll();
+    }
+ 
+    @Override
+    public void deleteTransaction(Long transactionId) {
+        if (!borrowingRepository.existsById(transactionId)) {
+            throw new BorrowingNotFoundException("Transaction not found with ID: " + transactionId);
+        }
+        borrowingRepository.deleteById(transactionId);
     }
 }
- 

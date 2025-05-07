@@ -19,7 +19,7 @@ import com.cts.service.BookService;
 import lombok.RequiredArgsConstructor;
  
 @RestController
-@RequestMapping("/api/books")
+@RequestMapping("/books")
 @RequiredArgsConstructor
 public class BookController {
  

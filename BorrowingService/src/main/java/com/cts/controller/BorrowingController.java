@@ -19,7 +19,7 @@ import com.cts.service.BorrowingService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/borrowings")
+@RequestMapping("/borrowings")
 @RequiredArgsConstructor
 public class BorrowingController {
  

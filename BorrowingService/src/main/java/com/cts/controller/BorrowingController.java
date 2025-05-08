@@ -35,7 +35,7 @@ public class BorrowingController {
         return ResponseEntity.ok(borrowingService.returnBook(id));
     }
  
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<BorrowingTransaction> getTransaction(@PathVariable Long id) {
         return ResponseEntity.ok(borrowingService.getTransactionById(id));
     }

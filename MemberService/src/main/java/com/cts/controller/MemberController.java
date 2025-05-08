@@ -26,38 +26,38 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
  
-    @PostMapping
+    @PostMapping("/addmember")
     public ResponseEntity<Member> addMember(@RequestBody MemberDTO dto) {
         return ResponseEntity.ok(memberService.addMember(dto));
     }
  
-    @PutMapping("/{id}")
+    @PutMapping("/upadate/{id}")
     public ResponseEntity<Member> updateMember(@PathVariable Long id, @RequestBody MemberDTO dto) {
         return ResponseEntity.ok(memberService.updateMember(id, dto));
     }
  
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }
  
-    @GetMapping("/{id}")
+    @GetMapping("/getmemberbyid/{id}")
     public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.getMemberById(id));
     }
  
-    @GetMapping
+    @GetMapping("/getallmember")
     public ResponseEntity<List<Member>> getAllMembers() {
         return ResponseEntity.ok(memberService.getAllMembers());
     }
  
-    @GetMapping("/{id}/exists")
+    @GetMapping("/exists/{id}")
     public ResponseEntity<Boolean> isMemberExists(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.isMemberExists(id));
     }
  
-    @PatchMapping("/{id}/status")
+    @PatchMapping("/status/{id}")
     public ResponseEntity<Member> changeMembershipStatus(@PathVariable Long id, @RequestParam String status) {
         return ResponseEntity.ok(memberService.changeMembershipStatus(id, status));
     }

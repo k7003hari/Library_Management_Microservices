@@ -26,38 +26,38 @@ public class BookController {
     private final BookService bookService;
  
     // Existing endpoints
-    @PostMapping
+    @PostMapping("/addbook")
     public Book addBook(@RequestBody BookDTO dto) {
         return bookService.addBook(dto);
     }
  
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public Book getBook(@PathVariable Long id) {
         return bookService.getBookById(id);
     }
  
-    @GetMapping
+    @GetMapping("/getallbooks")
     public List<Book> getAllBooks() {
         return bookService.getAllBooks();
     }
  
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Book updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
         return bookService.updateBook(id, dto);
     }
  
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
  
     // Feign endpoints
-    @GetMapping("/{bookId}/exists")
+    @GetMapping("/exists/{bookId}")
     public boolean bookExists(@PathVariable Long bookId) {
         return bookService.existsById(bookId);
     }
  
-    @GetMapping("/{bookId}/availability")
+    @GetMapping("/avail/{bookId}/")
     public boolean isBookAvailable(@PathVariable Long bookId) {
         return bookService.isBookAvailable(bookId);
     }

@@ -26,7 +26,7 @@ public class BookServiceApplicationTests {
         BookDTO dto = BookDTO.builder().title("Sample").author("Author").genre("Fiction").isbn("12345").yearPublished(2020).availableCopies(3).build();
         Book book = Book.builder().bookId(1L).title(dto.getTitle()).author(dto.getAuthor()).genre(dto.getGenre()).isbn(dto.getIsbn()).yearPublished(dto.getYearPublished()).availableCopies(dto.getAvailableCopies()).build();
         when(bookRepository.save(Mockito.any())).thenReturn(book);
-        Book result = bookService.addBook(dto);
+        BookDTO result = bookService.addBook(dto);
         assertNotNull(result);
         assertEquals("Sample", result.getTitle());
     }

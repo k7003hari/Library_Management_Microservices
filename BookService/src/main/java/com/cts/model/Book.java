@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Book {
+	public Book(String title2, String author2, String genre2, String isbn2, int yearPublished2, int availableCopies2) {
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bookId;

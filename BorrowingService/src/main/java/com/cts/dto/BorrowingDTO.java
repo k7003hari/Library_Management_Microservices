@@ -1,19 +1,26 @@
 package com.cts.dto;
 
-import lombok.*;
-
 import java.time.LocalDate;
- 
+
+import jakarta.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class BorrowingDTO {
- 
-    private Long transactionId;
-    private Long bookId;
-    private Long memberId;
-    private LocalDate borrowDate;
-    private LocalDate returnDate;
-    private String status;
+	private Long id;
+
+	@NotNull(message = "Member ID cannot be null")
+	private Long memberId;
+
+	@NotNull(message = "Book ID cannot be null")
+	private Long bookId;
+
+	private LocalDate borrowDate;
+	private LocalDate returnDate;
+	private boolean returned;
 }

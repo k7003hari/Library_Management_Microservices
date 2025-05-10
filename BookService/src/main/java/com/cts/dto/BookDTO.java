@@ -12,26 +12,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BookDTO {
-
-	public BookDTO(Long bookId, String title2, String author2, String genre2, String isbn2, int yearPublished2,
-			int availableCopies2) {
-	}
-
-	@NotBlank(message = "Title is required")
-	private String title;
-
-	@NotBlank(message = "Author is required")
-	private String author;
-
-	@NotBlank(message = "Genre is required")
-	private String genre;
-
-	@NotBlank(message = "ISBN is required")
-	private String isbn;
-
-	@Min(value = 1000, message = "Year must be a valid 4-digit number")
-	private int yearPublished;
-
-	@Min(value = 0, message = "Available copies cannot be negative")
-	private int availableCopies;
+ 
+    private Long bookId;
+ 
+    @NotBlank(message = "Title cannot be blank")
+    private String title;
+ 
+    @NotBlank(message = "Author cannot be blank")
+    private String author;
+ 
+    @NotBlank(message = "Genre cannot be blank")
+    private String genre;
+ 
+    @NotBlank(message = "ISBN cannot be blank")
+    private String isbn;
+ 
+    @Min(value = 1000, message = "Year published must be a valid year")
+    private int yearPublished;
+ 
+    @Min(value = 1, message = "Total copies must be at least 1")
+    private int totalCopies;
+ 
+    @Min(value = 0, message = "Available copies cannot be negative")
+    private int availableCopies;
 }

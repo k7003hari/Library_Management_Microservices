@@ -5,3 +5,4 @@ public class MemberNotFoundException extends RuntimeException {
         super(message);
     }
 }
+

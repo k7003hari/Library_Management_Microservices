@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BorrowingTransaction {
+public class Borrowing {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transactionId;
@@ -25,5 +25,5 @@ public class BorrowingTransaction {
 	private Long memberId;
 	private LocalDate borrowDate;
 	private LocalDate returnDate;
-	private String status; // "Borrowed", "Returned"
+	private boolean returned;
 }

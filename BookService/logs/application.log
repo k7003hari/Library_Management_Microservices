@@ -1,0 +1,364 @@
+2025-05-09T14:24:15.961+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T14:24:15.961+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T14:24:15.964+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T14:24:15.965+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T14:24:16.610+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T14:24:16.624+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 1 JPA repository interface.
+2025-05-09T14:24:16.698+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T14:24:16.823+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T14:24:16.825+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T14:24:16.825+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T14:24:16.864+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-5].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-05-09T14:24:16.864+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 899 ms
+2025-05-09T14:24:16.900+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T14:24:16.901+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T14:24:16.912+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T14:24:16.913+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Starting...
+2025-05-09T14:24:16.927+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-7 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7e50032f
+2025-05-09T14:24:16.928+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Start completed.
+2025-05-09T14:24:16.930+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T14:24:16.930+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-7)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T14:24:16.965+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T14:24:16.978+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:24:17.036+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T14:24:17.036+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:24:17.037+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown initiated...
+2025-05-09T14:24:17.080+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-7 - Shutdown completed.
+2025-05-09T14:24:17.081+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T14:24:17.084+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T14:24:17.090+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T14:26:22.049+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T14:26:22.049+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T14:26:22.051+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T14:26:22.051+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T14:26:22.336+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T14:26:22.350+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 1 JPA repository interface.
+2025-05-09T14:26:22.412+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T14:26:22.463+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T14:26:22.463+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T14:26:22.464+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T14:26:22.490+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-6].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-05-09T14:26:22.491+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 439 ms
+2025-05-09T14:26:22.516+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T14:26:22.518+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T14:26:22.526+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T14:26:22.527+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Starting...
+2025-05-09T14:26:22.538+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-8 - Added connection com.mysql.cj.jdbc.ConnectionImpl@106d067f
+2025-05-09T14:26:22.539+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Start completed.
+2025-05-09T14:26:22.541+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T14:26:22.541+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-8)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T14:26:22.579+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T14:26:22.591+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:26:22.625+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T14:26:22.625+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:26:22.625+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown initiated...
+2025-05-09T14:26:22.627+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-8 - Shutdown completed.
+2025-05-09T14:26:22.628+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T14:26:22.631+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T14:26:22.635+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T14:26:33.129+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T14:26:33.129+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T14:26:33.133+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T14:26:33.133+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T14:26:33.366+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T14:26:33.377+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 1 JPA repository interface.
+2025-05-09T14:26:33.440+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T14:26:33.491+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T14:26:33.491+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T14:26:33.492+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T14:26:33.534+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-7].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-05-09T14:26:33.534+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 401 ms
+2025-05-09T14:26:33.577+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T14:26:33.581+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T14:26:33.593+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T14:26:33.595+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Starting...
+2025-05-09T14:26:33.608+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-9 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57454139
+2025-05-09T14:26:33.609+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Start completed.
+2025-05-09T14:26:33.610+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T14:26:33.610+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-9)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T14:26:33.656+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T14:26:33.666+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:26:33.711+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T14:26:33.711+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:26:33.712+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown initiated...
+2025-05-09T14:26:33.714+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-9 - Shutdown completed.
+2025-05-09T14:26:33.714+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T14:26:33.719+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T14:26:33.723+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T14:27:58.749+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T14:27:58.750+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T14:27:58.751+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T14:27:58.751+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T14:27:58.879+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T14:27:58.889+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 1 JPA repository interface.
+2025-05-09T14:27:58.931+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T14:27:58.971+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T14:27:58.972+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T14:27:58.972+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T14:27:59.003+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-8].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-05-09T14:27:59.003+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 252 ms
+2025-05-09T14:27:59.034+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T14:27:59.037+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T14:27:59.045+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T14:27:59.046+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Starting...
+2025-05-09T14:27:59.057+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-10 - Added connection com.mysql.cj.jdbc.ConnectionImpl@47230be3
+2025-05-09T14:27:59.058+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Start completed.
+2025-05-09T14:27:59.059+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T14:27:59.059+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-10)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T14:27:59.089+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T14:27:59.099+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:27:59.176+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T14:27:59.176+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T14:27:59.176+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown initiated...
+2025-05-09T14:27:59.210+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-10 - Shutdown completed.
+2025-05-09T14:27:59.210+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T14:27:59.214+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T14:27:59.219+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T18:06:58.232+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T18:06:58.232+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T18:06:58.238+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T18:06:58.238+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T18:06:58.859+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T18:06:58.890+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 27 ms. Found 1 JPA repository interface.
+2025-05-09T18:06:59.080+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T18:06:59.306+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T18:06:59.312+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T18:06:59.312+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T18:06:59.412+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-9].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2025-05-09T18:06:59.413+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1174 ms
+2025-05-09T18:06:59.500+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T18:06:59.508+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T18:06:59.552+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T18:06:59.559+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Starting...
+2025-05-09T18:06:59.607+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-11 - Added connection com.mysql.cj.jdbc.ConnectionImpl@54a68fd1
+2025-05-09T18:06:59.608+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Start completed.
+2025-05-09T18:06:59.612+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T18:06:59.613+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-11)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T18:06:59.786+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T18:06:59.822+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:07:00.018+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T18:07:00.019+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:07:00.020+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown initiated...
+2025-05-09T18:07:00.056+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-11 - Shutdown completed.
+2025-05-09T18:07:00.058+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T18:07:00.074+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T18:07:00.088+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T18:07:04.674+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T18:07:04.674+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T18:07:04.679+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T18:07:04.679+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T18:07:05.040+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T18:07:05.077+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 31 ms. Found 1 JPA repository interface.
+2025-05-09T18:07:05.253+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T18:07:05.384+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T18:07:05.385+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T18:07:05.386+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T18:07:05.462+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-10].[localhost].[/]    : Initializing Spring embedded WebApplicationContext
+2025-05-09T18:07:05.462+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 783 ms
+2025-05-09T18:07:05.519+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T18:07:05.525+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T18:07:05.543+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T18:07:05.546+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Starting...
+2025-05-09T18:07:05.572+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-12 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5ade43c0
+2025-05-09T18:07:05.572+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Start completed.
+2025-05-09T18:07:05.575+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T18:07:05.576+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-12)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T18:07:05.690+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T18:07:05.714+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:07:05.802+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T18:07:05.802+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:07:05.803+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown initiated...
+2025-05-09T18:07:05.813+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-12 - Shutdown completed.
+2025-05-09T18:07:05.814+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T18:07:05.823+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T18:07:05.830+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+
+2025-05-09T18:08:01.821+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : Starting BookServiceApplication using Java 21.0.6 with PID 8492 (C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes started by 2401161 in C:\Users\2401161\git\LibraryManagementRepo\BookService)
+2025-05-09T18:08:01.822+05:30  INFO 8492 --- [BookService] [restartedMain] com.cts.BookServiceApplication           : No active profile set, falling back to 1 default profile: "default"
+2025-05-09T18:08:01.825+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Fetching config from server at : http://localhost:8888
+2025-05-09T18:08:01.825+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.c.c.c.ConfigServerConfigDataLoader   : Located environment: name=BookService, profiles=[default], label=null, version=37d52033486e406b491c97647813bf9d2c03d350, state=
+2025-05-09T18:08:02.114+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-09T18:08:02.129+05:30  INFO 8492 --- [BookService] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13 ms. Found 1 JPA repository interface.
+2025-05-09T18:08:02.240+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e0029960-b2c8-33aa-b89a-e537e00dffd7
+2025-05-09T18:08:02.507+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8081 (http)
+2025-05-09T18:08:02.509+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-09T18:08:02.509+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-05-09T18:08:02.578+05:30  INFO 8492 --- [BookService] [restartedMain] o.a.c.c.C.[Tomcat-11].[localhost].[/]    : Initializing Spring embedded WebApplicationContext
+2025-05-09T18:08:02.578+05:30  INFO 8492 --- [BookService] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 753 ms
+2025-05-09T18:08:02.624+05:30  INFO 8492 --- [BookService] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-09T18:08:02.631+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-09T18:08:02.647+05:30  INFO 8492 --- [BookService] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-09T18:08:02.648+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Starting...
+2025-05-09T18:08:02.672+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-13 - Added connection com.mysql.cj.jdbc.ConnectionImpl@678e3c42
+2025-05-09T18:08:02.673+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Start completed.
+2025-05-09T18:08:02.675+05:30  WARN 8492 --- [BookService] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-09T18:08:02.676+05:30  INFO 8492 --- [BookService] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-13)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-09T18:08:02.753+05:30  INFO 8492 --- [BookService] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-09T18:08:02.770+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:08:02.840+05:30  WARN 8492 --- [BookService] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'bookController' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\controller\BookController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'bookServiceImpl' defined in file [C:\Users\2401161\git\LibraryManagementRepo\BookService\target\classes\com\cts\service\BookServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'java.lang.System$Logger' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2025-05-09T18:08:02.840+05:30  INFO 8492 --- [BookService] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-05-09T18:08:02.841+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown initiated...
+2025-05-09T18:08:02.878+05:30  INFO 8492 --- [BookService] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-13 - Shutdown completed.
+2025-05-09T18:08:02.880+05:30  INFO 8492 --- [BookService] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-05-09T18:08:02.887+05:30  INFO 8492 --- [BookService] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-05-09T18:08:02.892+05:30 ERROR 8492 --- [BookService] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.cts.service.BookServiceImpl required a bean of type 'java.lang.System$Logger' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'java.lang.System$Logger' in your configuration.
+

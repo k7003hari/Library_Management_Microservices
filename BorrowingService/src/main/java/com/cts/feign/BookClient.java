@@ -3,12 +3,23 @@ package com.cts.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "book-service")
+import com.cts.dto.BookDTO;
+
+import lombok.Data;
+import lombok.Getter;
+
+@FeignClient(name = "BOOK-SERVICE")
 public interface BookClient {
-	@GetMapping("/books/exists/{id}")
-	boolean isBookExist(@PathVariable Long id);
+    @GetMapping("/books/{id}")
+    BookDTO getBook(@PathVariable Long id);
+ 
+    @PutMapping("/api/books/{id}/copies")
+    void updateBookCopies(@PathVariable Long id, @RequestParam int availableCopies);
 
-	@GetMapping("/books/available/{id}")
-	boolean isBookAvailable(@PathVariable Long id);
+	BookDTO getBookById(Long bookId);
+
+	
 }

@@ -3,12 +3,12 @@ package com.cts.feign;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "member-service")
+import com.cts.dto.MemberDTO;
+
+@FeignClient(name = "MEMBER-SERVICE")
 public interface MemberClient {
-   @GetMapping("/members/exists/{id}")
-   boolean isMemberExist(@PathVariable Long id);
-
-   @GetMapping("/members/active/{id}")
-   boolean isMemberActive(@PathVariable Long id);
+    @GetMapping("/members/{id}")
+    Object getMember(@PathVariable Long id);
 }

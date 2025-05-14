@@ -7,13 +7,11 @@ import com.cts.dto.BookDTO;
 public interface BookService {
 	BookDTO addBook(BookDTO bookDTO);
 
-	BookDTO updateBook(Long bookId, BookDTO bookDTO);
+	BookDTO updateBook(Long id, BookDTO bookDTO);
 
-	void deleteBook(Long bookId);
+	void deleteBook(Long id);
 
-	BookDTO getBookById(Long bookId);
-
-	List<BookDTO> getAllBooks();
+	BookDTO getBook(Long id);
 
 	List<BookDTO> searchByTitle(String title);
 
@@ -21,7 +19,5 @@ public interface BookService {
 
 	List<BookDTO> searchByGenre(String genre);
 
-	boolean isBookExist(Long id);
-
-	boolean isBookAvailable(Long id);
+	BookDTO getBookForMember(Long bookId, String memberEmail);
 }

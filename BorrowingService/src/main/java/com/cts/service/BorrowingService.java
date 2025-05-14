@@ -2,18 +2,13 @@ package com.cts.service;
 
 import java.util.List;
 
-import com.cts.dto.BorrowingDTO;
+import com.cts.dto.BorrowingTransactionDTO;
 
 public interface BorrowingService {
-	BorrowingDTO borrowBook(BorrowingDTO borrowingDTO);
 
-	BorrowingDTO returnBook(Long transactionId);
+	BorrowingTransactionDTO borrowBook(Long memberId, Long bookId);
 
-	List<BorrowingDTO> getBorrowingsByMember(Long memberId);
+	BorrowingTransactionDTO returnBook(Long memberId, Long bookId);
 
-	boolean isBookBorrowed(Long bookId);
-
-	BorrowingDTO getBorrowingByTransactionId(Long transactionId);
-
-	List<BorrowingDTO> getAllBorrowings();
+	List<BorrowingTransactionDTO> getMemberBorrowedBooks(Long memberId);
 }

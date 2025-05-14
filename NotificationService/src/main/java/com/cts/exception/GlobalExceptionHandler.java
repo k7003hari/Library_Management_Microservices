@@ -1,34 +1,24 @@
 package com.cts.exception;
 
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
- 
+
+import com.cts.dto.ErrorResponse;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
  
     @ExceptionHandler(NotificationNotFoundException.class)
-    public ResponseEntity<?> handleNotificationNotFound(NotificationNotFoundException ex) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("timestamp", LocalDateTime.now());
-        error.put("message", ex.getMessage());
-        error.put("status", HttpStatus.NOT_FOUND.value());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNotificationNotFound(NotificationNotFoundException ex) {
+        return new ErrorResponse("NOTIFICATION_NOT_FOUND", ex.getMessage());
     }
  
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGenericException(Exception ex) {
-        Map<String, Object> error = new HashMap<>();
-        error.put("timestamp", LocalDateTime.now());
-        error.put("message", "Internal Server Error");
-        error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleOtherErrors(Exception ex) {
+        return new ErrorResponse("INTERNAL_SERVER_ERROR", "Something went wrong");
     }
 }
- 

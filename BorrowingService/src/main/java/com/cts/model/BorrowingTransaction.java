@@ -3,6 +3,8 @@ package com.cts.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Borrowing {
+public class BorrowingTransaction {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transactionId;
@@ -25,5 +28,11 @@ public class Borrowing {
 	private Long memberId;
 	private LocalDate borrowDate;
 	private LocalDate returnDate;
-	private boolean returned;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
+
+	public enum Status {
+		BORROWED, RETURNED
+	}
 }

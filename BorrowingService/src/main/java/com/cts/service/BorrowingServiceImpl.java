@@ -6,16 +6,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.cts.dto.BorrowingDTO;
-import com.cts.exception.BookAlreadyReturnedException;
-import com.cts.exception.BookNotFoundException;
-import com.cts.exception.BookUnavailableException;
-import com.cts.exception.BorrowingNotFoundException;
-import com.cts.exception.MemberInactiveException;
-import com.cts.exception.MemberNotFoundException;
+import com.cts.dto.BorrowingTransactionDTO;
+import com.cts.exception.BorrowingNotAllowedException;
+import com.cts.exception.BorrowingTransactionNotFoundException;
 import com.cts.feign.BookClient;
 import com.cts.feign.MemberClient;
-import com.cts.model.Borrowing;
+import com.cts.model.BorrowingTransaction;
 import com.cts.repository.BorrowingRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,84 +22,50 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BorrowingServiceImpl implements BorrowingService {
 
-	private final BorrowingRepository borrowingRepository;
+	private final BorrowingRepository repository;
 	private final BookClient bookClient;
 	private final MemberClient memberClient;
 
 	@Override
-	public BorrowingDTO borrowBook(BorrowingDTO dto) {
-		log.info("Attempting to borrow book: {}", dto);
+	public BorrowingTransactionDTO borrowBook(Long memberId, Long bookId) {
+		memberClient.getMember(memberId); // Ensure member exists
+		bookClient.getBook(bookId); // Ensure book exists
 
-		if (!memberClient.isMemberExist(dto.getMemberId())) {
-			throw new MemberNotFoundException("Member ID not found");
-		}
-		if (!memberClient.isMemberActive(dto.getMemberId())) {
-			throw new MemberInactiveException("Member is inactive");
-		}
-		if (!bookClient.isBookExist(dto.getBookId())) {
-			throw new BookNotFoundException("Book ID not found");
-		}
-		if (!bookClient.isBookAvailable(dto.getBookId())) {
-			throw new BookUnavailableException("Book is not available for borrowing");
+		long activeBorrowings = repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED)
+				.size();
+		if (activeBorrowings >= 5) {
+			throw new BorrowingNotAllowedException("Borrowing limit exceeded");
 		}
 
-		Borrowing borrowing = new Borrowing();
-		borrowing.setMemberId(dto.getMemberId());
-		borrowing.setBookId(dto.getBookId());
-		borrowing.setBorrowDate(LocalDate.now());
-		borrowing.setReturned(false);
+		BorrowingTransaction tx = BorrowingTransaction.builder().bookId(bookId).memberId(memberId)
+				.borrowDate(LocalDate.now()).status(BorrowingTransaction.Status.BORROWED).build();
 
-		borrowing = borrowingRepository.save(borrowing);
-		log.info("Book borrowed successfully with transactionId: {}", borrowing.getTransactionId());
-
-		return toDTO(borrowing);
+		repository.save(tx);
+		return mapToDTO(tx);
 	}
 
 	@Override
-	public BorrowingDTO returnBook(Long transactionId) {
-		log.info("Attempting to return book with transactionId: {}", transactionId);
-		Borrowing borrowing = borrowingRepository.findById(transactionId)
-				.orElseThrow(() -> new BorrowingNotFoundException("Transaction not found"));
+	public BorrowingTransactionDTO returnBook(Long memberId, Long bookId) {
+		BorrowingTransaction tx = repository
+				.findByBookIdAndMemberIdAndStatus(bookId, memberId, BorrowingTransaction.Status.BORROWED)
+				.orElseThrow(() -> new BorrowingTransactionNotFoundException("No active borrowing found"));
 
-		if (borrowing.isReturned()) {
-			throw new BookAlreadyReturnedException("Book has already been returned");
-		}
+		tx.setStatus(BorrowingTransaction.Status.RETURNED);
+		tx.setReturnDate(LocalDate.now());
+		repository.save(tx);
 
-		borrowing.setReturned(true);
-		borrowing.setReturnDate(LocalDate.now());
-		borrowing = borrowingRepository.save(borrowing);
-
-		log.info("Book returned for transactionId: {}", transactionId);
-		return toDTO(borrowing);
+		return mapToDTO(tx);
 	}
 
 	@Override
-	public List<BorrowingDTO> getBorrowingsByMember(Long memberId) {
-		log.info("Fetching borrowings for memberId: {}", memberId);
-		return borrowingRepository.findByMemberId(memberId).stream().map(this::toDTO).collect(Collectors.toList());
+	public List<BorrowingTransactionDTO> getMemberBorrowedBooks(Long memberId) {
+		return repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED).stream()
+				.map(this::mapToDTO).collect(Collectors.toList());
 	}
 
-	@Override
-	public boolean isBookBorrowed(Long bookId) {
-		log.info("Checking if bookId {} is currently borrowed", bookId);
-		return !borrowingRepository.findByBookIdAndReturnedFalse(bookId).isEmpty();
-	}
-
-	@Override
-	public BorrowingDTO getBorrowingByTransactionId(Long transactionId) {
-		log.info("Fetching borrowing by transactionId: {}", transactionId);
-		return borrowingRepository.findById(transactionId).map(this::toDTO)
-				.orElseThrow(() -> new BorrowingNotFoundException("Transaction ID not found"));
-	}
-
-	@Override
-	public List<BorrowingDTO> getAllBorrowings() {
-		log.info("Fetching all borrowings");
-		return borrowingRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
-	}
-
-	private BorrowingDTO toDTO(Borrowing b) {
-		return new BorrowingDTO(b.getTransactionId(), b.getMemberId(), b.getBookId(), b.getBorrowDate(),
-				b.getReturnDate(), b.isReturned());
+	private BorrowingTransactionDTO mapToDTO(BorrowingTransaction tx) {
+		return BorrowingTransactionDTO.builder().transactionId(tx.getTransactionId()).bookId(tx.getBookId())
+				.memberId(tx.getMemberId()).borrowDate(tx.getBorrowDate()).returnDate(tx.getReturnDate())
+				.status(tx.getStatus().name()).build();
 	}
 }

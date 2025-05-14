@@ -7,9 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.cts.model.Fine;
 
 public interface FineRepository extends JpaRepository<Fine, Long> {
-	List<Fine> findByMemberId(Long memberId);
-
-	boolean existsByFineId(Long fineId);
-
-	boolean existsByFineIdAndPaidTrue(Long fineId);
+    List<Fine> findByMemberId(Long memberId);
 }

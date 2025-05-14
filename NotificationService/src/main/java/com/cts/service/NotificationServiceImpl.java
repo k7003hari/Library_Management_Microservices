@@ -1,6 +1,6 @@
 package com.cts.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,38 +20,24 @@ public class NotificationServiceImpl implements NotificationService {
     private final NotificationRepository notificationRepository;
  
     @Override
-    public NotificationDTO sendNotification(NotificationDTO notificationDTO) {
+    public NotificationDTO sendNotification(NotificationDTO dto) {
         Notification notification = Notification.builder()
-                .memberId(notificationDTO.getMemberId())
-                .message(notificationDTO.getMessage())
-                .dateSent(LocalDateTime.now())
+                .memberId(dto.getMemberId())
+                .message(dto.getMessage())
+                .dateSent(LocalDate.now())
                 .build();
+ 
         Notification saved = notificationRepository.save(notification);
         return mapToDTO(saved);
     }
  
     @Override
-    public List<NotificationDTO> getNotificationsByMemberId(Long memberId) {
-        return notificationRepository.findByMemberId(memberId)
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
-    }
- 
-    @Override
-    public List<NotificationDTO> getAllNotifications() {
-        return notificationRepository.findAll()
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
-    }
- 
-    @Override
-    public void deleteNotification(Long notificationId) {
-        if (!notificationRepository.existsById(notificationId)) {
-            throw new NotificationNotFoundException("Notification with ID " + notificationId + " not found.");
+    public List<NotificationDTO> getNotificationsForMember(Long memberId) {
+        List<Notification> notifications = notificationRepository.findByMemberId(memberId);
+        if (notifications.isEmpty()) {
+            throw new NotificationNotFoundException("No notifications for member ID: " + memberId);
         }
-        notificationRepository.deleteById(notificationId);
+        return notifications.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
  
     private NotificationDTO mapToDTO(Notification notification) {

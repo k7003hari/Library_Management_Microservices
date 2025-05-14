@@ -1,7 +1,8 @@
 package com.cts.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,8 @@ public class Notification {
  
     private Long memberId;
  
+    @Column(nullable = false)
     private String message;
  
-    private LocalDateTime dateSent;
+    private LocalDate dateSent;
 }

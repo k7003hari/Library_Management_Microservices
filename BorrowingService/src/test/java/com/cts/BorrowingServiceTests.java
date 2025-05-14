@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cts.dto.BorrowingTransactionDTO;
+import com.cts.model.BorrowingTransaction;
 import com.cts.service.BorrowingService;
 @SpringBootTest
 class BorrowingServiceTests {
@@ -19,8 +19,8 @@ class BorrowingServiceTests {
     void testBorrowBook() {
         Long memberId = 1L;
         Long bookId = 1L;
-        BorrowingTransactionDTO dto = borrowingService.borrowBook(memberId, bookId);
-        assertNotNull(dto);
-        assertEquals(dto.getStatus(), BorrowingTransactionDTO.Status.BORROWED);
+        BorrowingTransaction hhh = borrowingService.borrowBook(memberId, bookId);
+        assertNotNull(hhh);
+        assertEquals(hhh.getStatus(), BorrowingTransaction.Status.BORROWED);
     }
 }

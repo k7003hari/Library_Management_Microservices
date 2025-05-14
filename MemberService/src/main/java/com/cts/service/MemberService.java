@@ -1,14 +1,15 @@
 package com.cts.service;
 
-import com.cts.dto.MemberDTO;
+import com.cts.model.Member;
 
 public interface MemberService {
 
-	MemberDTO registerMember(MemberDTO memberDTO);
+	Member registerMember(Member member);
 
-	MemberDTO updateMember(Long memberId, MemberDTO memberDTO);
+	Member updateMember(Long memberId, Member member);
 
-	MemberDTO getMember(Long memberId, String requesterEmail);
-
-	MemberDTO updateMembershipStatus(Long memberId, String membershipStatus, String requesterEmail);
+	Member getMember(Long memberId, String requesterEmail);
+	
+	Member getMemberById(Long memberId);
+	     
 }

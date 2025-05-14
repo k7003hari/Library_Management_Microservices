@@ -2,22 +2,26 @@ package com.cts.service;
 
 import java.util.List;
 
-import com.cts.dto.BookDTO;
+import com.cts.model.Book;
 
 public interface BookService {
-	BookDTO addBook(BookDTO bookDTO);
+	Book addBook(Book book);
 
-	BookDTO updateBook(Long id, BookDTO bookDTO);
+	Book updateBook(Long id, Book book);
 
 	void deleteBook(Long id);
 
-	BookDTO getBook(Long id);
+	Book getBook(Long id);
 
-	List<BookDTO> searchByTitle(String title);
+	List<Book> searchByTitle(String title);
 
-	List<BookDTO> searchByAuthor(String author);
+	List<Book> searchByAuthor(String author);
 
-	List<BookDTO> searchByGenre(String genre);
+	List<Book> searchByGenre(String genre);
 
-	BookDTO getBookForMember(Long bookId, String memberEmail);
+	Book getBookForMember(Long bookId, String memberEmail);
+	
+	 void updateBookCopies(Long id, int availableCopies);
+	
+	
 }

@@ -16,78 +16,72 @@ import com.cts.feign.MemberClient;
 import com.cts.model.Fine;
 import com.cts.repository.FineRepository;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class FineServiceImpl implements FineService {
 
-	private final FineRepository fineRepository;
-	private final BorrowingClient borrowingClient;
-	private final MemberClient memberClient;
+    private final FineRepository fineRepository;
+    private final BorrowingClient borrowingClient;
+    private final MemberClient memberClient;
 
-	// Method to calculate fines
-	@Override
-	public FineDTO calculateFine(Long memberId) {
-		List<BorrowingTransactionDTO> borrowedBooks = borrowingClient.getBorrowedBooksByMember(memberId);
+    @Override
+    public FineDTO calculateFine(Long memberId) {
+        log.info("Calculating fine for member ID: {}", memberId);
+        List<BorrowingTransactionDTO> borrowedBooks = borrowingClient.getBorrowedBooksByMember(memberId);
 
-		BigDecimal totalFine = BigDecimal.ZERO;
-		for (BorrowingTransactionDTO transaction : borrowedBooks) {
-			long overdueDays = calculateOverdueDays(transaction.getReturnDate());
-			if (overdueDays > 0) {
-				totalFine = totalFine.add(BigDecimal.valueOf(overdueDays).multiply(new BigDecimal("1.00"))); // 1 unit
-																												// of
-																												// currency
-																												// per
-																												// overdue
-																												// day
-			}
-		}
+        BigDecimal totalFine = BigDecimal.ZERO;
+        for (BorrowingTransactionDTO transaction : borrowedBooks) {
+            long overdueDays = calculateOverdueDays(transaction.getReturnDate());
+            if (overdueDays > 0) {
+                totalFine = totalFine.add(BigDecimal.valueOf(overdueDays).multiply(new BigDecimal("1.00")));
+            }
+        }
 
-		Fine fine = Fine.builder().member(memberClient.getMemberById(memberId)) // Assuming you have a service to get
-																				// member details
-				.amount(totalFine).status(Fine.FineStatus.PENDING).transactionDate(LocalDate.now()).build();
+        Fine fine = Fine.builder()
+                .memberId(memberId)
+                .amount(totalFine)
+                .status(Fine.FineStatus.PENDING)
+                .transactionDate(LocalDate.now())
+                .build();
 
-		fineRepository.save(fine);
-		log.info("Fine calculated for Member ID: {}", memberId);
-		return mapToDTO(fine);
-	}
+        fineRepository.save(fine);
+        log.info("Fine calculated for member ID: {}", memberId);
+        return new FineDTO(fine.getFineId(), memberClient.getMemberById(memberId), fine.getAmount(), fine.getStatus().name(), fine.getTransactionDate());
+    }
 
-	// Method to calculate overdue days
-	private long calculateOverdueDays(LocalDate returnDate) {
-		if (returnDate == null || returnDate.isBefore(LocalDate.now())) {
-			return returnDate == null ? 0 : returnDate.until(LocalDate.now()).getDays();
-		}
-		return 0;
-	}
+    private long calculateOverdueDays(LocalDate returnDate) {
+        if (returnDate == null || returnDate.isBefore(LocalDate.now())) {
+            return returnDate == null ? 0 : returnDate.until(LocalDate.now()).getDays();
+        }
+        return 0;
+    }
 
-	// Method to pay fine (only the member who owes can pay)
-	@Override
-	public void payFine(Long memberId, Long fineId) {
-		Fine fine = fineRepository.findById(fineId)
-				.orElseThrow(() -> new FineNotFoundException("Fine not found with ID: " + fineId));
+    @Override
+    public void payFine(Long memberId, Long fineId) {
+        log.info("Paying fine with ID: {} for member ID: {}", fineId, memberId);
+        Fine fine = fineRepository.findById(fineId)
+                .orElseThrow(() -> new FineNotFoundException("Fine not found with ID: " + fineId));
 
-		if (!fine.getMember().getMemberId().equals(memberId)) {
-			throw new UnauthorizedAccessException("You are not authorized to pay this fine.");
-		}
+        if (!fine.getMemberId().equals(memberId)) {
+            log.error("Unauthorized access attempt by member ID: {}", memberId);
+            throw new UnauthorizedAccessException("You are not authorized to pay this fine.");
+        }
 
-		fine.setStatus(Fine.FineStatus.PAID);
-		fineRepository.save(fine);
-		log.info("Fine paid for Member ID: {}", memberId);
-	}
+        fine.setStatus(Fine.FineStatus.PAID);
+        fineRepository.save(fine);
+        log.info("Fine paid for member ID: {}", memberId);
+    }
 
-	// Method for Admin to view all fines
-	@Override
-	public List<FineDTO> getAllFines() {
-		List<Fine> fines = fineRepository.findAll();
-		return fines.stream().map(this::mapToDTO).collect(Collectors.toList());
-	}
-
-	private FineDTO mapToDTO(Fine fine) {
-		return FineDTO.builder().fineId(fine.getFineId()).memberId(fine.getMember().getMemberId())
-				.amount(fine.getAmount()).status(fine.getStatus().name()) // Convert enum to String
-				.transactionDate(fine.getTransactionDate()).build();
-	}
+    @Override
+    public List<FineDTO> getAllFines() {
+        log.debug("Fetching all fines");
+        List<Fine> fines = fineRepository.findAll();
+        return fines.stream()
+                .map(fine -> new FineDTO(fine.getFineId(), memberClient.getMemberById(fine.getMemberId()), fine.getAmount(), fine.getStatus().name(), fine.getTransactionDate()))
+                .collect(Collectors.toList());
+    }
 }

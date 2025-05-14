@@ -14,57 +14,62 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cts.dto.BookDTO;
+import com.cts.model.Book;
 import com.cts.service.BookService;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/books")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class BookController {
- 
+
     private final BookService bookService;
- 
-    @PostMapping
+
+    @PostMapping("/addbook")
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO addBook(@RequestBody BookDTO dto) {
-        return bookService.addBook(dto);
+    public Book addBook(@RequestBody Book book) {
+        return bookService.addBook(book);
     }
- 
-    @PutMapping("/{id}")
-    public BookDTO updateBook(@PathVariable Long id, @RequestBody BookDTO dto) {
-        return bookService.updateBook(id, dto);
+
+    @PutMapping("/update/{id}")
+    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
+        return bookService.updateBook(id, book);
     }
- 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
- 
-    @GetMapping("/{id}")
-    public BookDTO getBook(@PathVariable Long id) {
+
+    @GetMapping("/getById/{id}")
+    public Book getBook(@PathVariable Long id) {
         return bookService.getBook(id);
     }
- 
-    @GetMapping("/search/title")
-    public List<BookDTO> searchByTitle(@RequestParam String title) {
+
+    @GetMapping("/search/title/{title}")
+    public List<Book> searchByTitle(@PathVariable("title") String title) {
         return bookService.searchByTitle(title);
     }
- 
-    @GetMapping("/search/author")
-    public List<BookDTO> searchByAuthor(@RequestParam String author) {
+
+    @GetMapping("/search/author/{author}")
+    public List<Book> searchByAuthor(@PathVariable("author") String author) {
         return bookService.searchByAuthor(author);
     }
- 
-    @GetMapping("/search/genre")
-    public List<BookDTO> searchByGenre(@RequestParam String genre) {
+
+    @GetMapping("/search/genre/{genre}")
+    public List<Book> searchByGenre(@PathVariable("genre") String genre) {
         return bookService.searchByGenre(genre);
     }
- 
-    @GetMapping("/secure/{id}")
-    public BookDTO getBookForMember(@PathVariable Long id, @RequestParam String memberEmail) {
+
+    @GetMapping("/member/{id}/{Email}")
+    public Book getBookForMember(@PathVariable Long id, @PathVariable("Email") String memberEmail) {
         return bookService.getBookForMember(id, memberEmail);
+    }
+
+    @PutMapping("/{id}/copies")
+    public void updateBookCopies(@PathVariable Long id, @PathVariable ("count")int availableCopies) {
+        bookService.updateBookCopies(id, availableCopies);
     }
 }

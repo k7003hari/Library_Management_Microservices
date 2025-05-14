@@ -1,5 +1,10 @@
 package com.cts;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -8,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.cts.dto.BookDTO;
+import com.cts.model.Book;
 import com.cts.service.BookService;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test") // assumes your test profile uses MySQL
@@ -20,11 +23,11 @@ class BookServiceTests {
     @Autowired
     private BookService bookService;
  
-    private BookDTO sampleBook;
+    private Book sampleBook;
  
     @BeforeEach
     void init() {
-        sampleBook = BookDTO.builder()
+        sampleBook = Book.builder()
                 .title("Clean Code")
                 .author("Robert C. Martin")
                 .genre("Programming")
@@ -36,37 +39,37 @@ class BookServiceTests {
  
     @Test
     void testAddBook() {
-        BookDTO saved = bookService.addBook(sampleBook);
+        Book saved = bookService.addBook(sampleBook);
         assertNotNull(saved.getBookId());
         assertEquals("Clean Code", saved.getTitle());
     }
  
     @Test
     void testUpdateBook() {
-        BookDTO saved = bookService.addBook(sampleBook);
+        Book saved = bookService.addBook(sampleBook);
         saved.setTitle("Clean Code Updated");
  
-        BookDTO updated = bookService.updateBook(saved.getBookId(), saved);
+        Book updated = bookService.updateBook(saved.getBookId(), saved);
         assertEquals("Clean Code Updated", updated.getTitle());
     }
  
     @Test
     void testDeleteBook() {
-        BookDTO saved = bookService.addBook(sampleBook);
+        Book saved = bookService.addBook(sampleBook);
         assertDoesNotThrow(() -> bookService.deleteBook(saved.getBookId()));
     }
  
     @Test
     void testSearchByTitle() {
         bookService.addBook(sampleBook);
-        List<BookDTO> found = bookService.searchByTitle("Clean");
+        List<Book> found = bookService.searchByTitle("Clean");
         assertFalse(found.isEmpty());
     }
  
     @Test
     void testGetBook() {
-        BookDTO saved = bookService.addBook(sampleBook);
-        BookDTO found = bookService.getBook(saved.getBookId());
+        Book saved = bookService.addBook(sampleBook);
+        Book found = bookService.getBook(saved.getBookId());
         assertEquals("Clean Code", found.getTitle());
     }
 }

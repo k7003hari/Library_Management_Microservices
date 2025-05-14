@@ -1,88 +1,67 @@
 package com.cts.service;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import com.cts.dto.MemberDTO;
 import com.cts.exception.MemberNotFoundException;
 import com.cts.model.Member;
 import com.cts.repository.MemberRepository;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
- 
 
-    private MemberRepository memberRepository;
- 
-    @Override
-    public MemberDTO registerMember(MemberDTO dto) {
-        log.info("Registering new member: {}", dto.getEmail());
- 
-        Member member = new Member();
-        BeanUtils.copyProperties(dto, member);
-        Member saved = memberRepository.save(member);
- 
-        MemberDTO result = new MemberDTO();
-        BeanUtils.copyProperties(saved, result);
-        return result;
-    }
- 
-    @Override
-    public MemberDTO updateMember(Long memberId, MemberDTO dto) {
-        log.info("Updating member: {}", memberId);
- 
-        Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new MemberNotFoundException("Member not found"));
- 
-        member.setName(dto.getName());
-        member.setEmail(dto.getEmail());
-        member.setPhone(dto.getPhone());
-        member.setAddress(dto.getAddress());
-        member.setMembershipStatus(dto.getMembershipStatus());
-        Member updated = memberRepository.save(member);
- 
-        MemberDTO result = new MemberDTO();
-        BeanUtils.copyProperties(updated, result);
-        return result;
-    }
- 
-    @Override
-    public MemberDTO getMember(Long memberId, String requesterEmail) {
-        log.info("Fetching member {} for requester {}", memberId, requesterEmail);
- 
-        Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new MemberNotFoundException("Member not found"));
- 
-        if (!member.getEmail().equals(requesterEmail)) {
-            throw new MemberNotFoundException("Access Denied: Not your profile");
-        }
- 
-        MemberDTO dto = new MemberDTO();
-        BeanUtils.copyProperties(member, dto);
-        return dto;
-    }
- 
-    @Override
-    public MemberDTO updateMembershipStatus(Long memberId, String membershipStatus, String requesterEmail) {
-        log.info("Updating membership status for member {} to {}", memberId, membershipStatus);
- 
-        Member member = memberRepository.findById(memberId)
-            .orElseThrow(() -> new MemberNotFoundException("Member not found"));
- 
-        if (!member.getEmail().equals(requesterEmail)) {
-            throw new MemberNotFoundException("Access Denied: Not your profile");
-        }
- 
-        member.setMembershipStatus(membershipStatus);
-        Member updated = memberRepository.save(member);
- 
-        MemberDTO result = new MemberDTO();
-        BeanUtils.copyProperties(updated, result);
-        return result;
-    }
+	private final MemberRepository memberRepository;
+
+	@Override
+	public Member registerMember(Member member) {
+		log.info("Registering new member: {}", member.getEmail());
+		Member saved = memberRepository.save(member);
+		log.info("Member registered successfully with ID: {}", saved.getMemberId());
+		return saved;
+	}
+
+	@Override
+	public Member updateMember(Long memberId, Member member) {
+		log.info("Updating member: {}", memberId);
+		Member existingMember = memberRepository.findById(memberId).orElseThrow(() -> {
+			log.error("Update failed: Member not found with ID: {}", memberId);
+			return new MemberNotFoundException("Member not found with ID: " + memberId);
+		});
+		existingMember.setName(member.getName());
+		existingMember.setEmail(member.getEmail());
+		existingMember.setPhone(member.getPhone());
+		existingMember.setAddress(member.getAddress());
+		existingMember.setMembershipStatus(member.getMembershipStatus());
+		memberRepository.save(existingMember);
+		log.info("Member updated successfully with ID: {}", memberId);
+		return existingMember;
+	}
+
+	@Override
+	public Member getMember(Long memberId, String requesterEmail) {
+		log.info("Fetching member {} for requester {}", memberId, requesterEmail);
+		Member member = memberRepository.findById(memberId).orElseThrow(() -> {
+			log.error("Member not found with ID: {}", memberId);
+			return new MemberNotFoundException("Member not found with ID: " + memberId);
+		});
+		if (!member.getEmail().equals(requesterEmail)) {
+			throw new MemberNotFoundException("Access Denied: Not your profile");
+		}
+		return member;
+	}
+
+	@Override
+	public Member getMemberById(Long memberId) {
+		log.info("Fetching member by ID {}", memberId);
+		return memberRepository.findById(memberId).orElseThrow(() -> {
+			log.error("Member not found with ID: {}", memberId);
+			return new MemberNotFoundException("Member not found with ID: " + memberId);
+		});
+	}
 }
- 

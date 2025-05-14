@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FineDTO {
     private Long fineId;
-    private Long memberId;
+    private MemberDTO memberId;
     private BigDecimal amount;
     private String status; // Must be named "status"
     private LocalDate transactionDate;

@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cts.dto.FineDTO;
 import com.cts.service.FineService;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/fines")
-@RequiredArgsConstructor
+@RequestMapping("/fines")
+@AllArgsConstructor
 public class FineController {
  
     private final FineService fineService;
  
     // Endpoint to calculate fine for a member
-    @PostMapping("/calculate/{memberId}")
+    @PostMapping("/calculatefine/{memberId}")
     public FineDTO calculateFine(@PathVariable Long memberId) {
         return fineService.calculateFine(memberId);
     }
@@ -33,7 +34,7 @@ public class FineController {
     }
  
     // Endpoint for Admin to view all fines
-    @GetMapping("/all")
+    @GetMapping("/allfines")
     public List<FineDTO> getAllFines() {
         return fineService.getAllFines();
     }

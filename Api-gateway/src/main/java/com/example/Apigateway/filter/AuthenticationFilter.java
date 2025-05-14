@@ -65,12 +65,8 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 					|| path.startsWith("/fines") || path.startsWith("/notifications");
 
 		case "MEMBER":
-			return (path.startsWith("/members") || path.startsWith("/borrowings") || path.startsWith("/fines")
+			return (path.startsWith("/members") ||path.startsWith("/books") || path.startsWith("/borrowings") || path.startsWith("/fines")
 					|| path.startsWith("/notifications")) && method.equalsIgnoreCase("GET");
-
-		case "LIBRARIAN":
-			return (path.startsWith("/books") || path.startsWith("/borrowings") || path.startsWith("/members"));
-
 		default:
 			return false;
 		}

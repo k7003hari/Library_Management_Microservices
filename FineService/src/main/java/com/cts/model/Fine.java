@@ -3,10 +3,6 @@ package com.cts.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.springframework.boot.json.JsonWriter.Member;
-
-import com.cts.dto.MemberDTO;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,9 +28,7 @@ public class Fine {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fineId;
 
-	@ManyToOne
-	@JoinColumn(name = "member_id", nullable = false)
-	private MemberDTO member;
+	private Long memberId;
 
 	private BigDecimal amount;
 

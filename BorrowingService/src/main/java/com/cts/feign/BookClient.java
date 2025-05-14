@@ -11,15 +11,14 @@ import com.cts.dto.BookDTO;
 import lombok.Data;
 import lombok.Getter;
 
-@FeignClient(name = "BOOK-SERVICE")
+@FeignClient(name = "BOOKSERVICE", path="/books")
 public interface BookClient {
-    @GetMapping("/books/{id}")
+    @GetMapping("/getById/{id}")
     BookDTO getBook(@PathVariable Long id);
  
-    @PutMapping("/api/books/{id}/copies")
+    @PutMapping("/books/{id}/copies")
     void updateBookCopies(@PathVariable Long id, @RequestParam int availableCopies);
 
-	BookDTO getBookById(Long bookId);
 
 	
 }

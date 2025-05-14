@@ -14,21 +14,25 @@ import com.cts.service.NotificationService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationController {
 
-   private final NotificationService notificationService;
+    private final NotificationService notificationService;
 
-   @PostMapping
-   public NotificationDTO sendNotification(@Valid @RequestBody NotificationDTO notificationDTO) {
-       return notificationService.sendNotification(notificationDTO);
-   }
+    @PostMapping("/send")
+    public NotificationDTO sendNotification(@Valid @RequestBody NotificationDTO notificationDTO) {
+        log.info("POST /notifications/send");
+        return notificationService.sendNotification(notificationDTO);
+    }
 
-   @GetMapping("/{memberId}")
-   public List<NotificationDTO> getMemberNotifications(@PathVariable Long memberId) {
-       return notificationService.getNotificationsForMember(memberId);
-   }
+    @GetMapping("/{memberId}")
+    public List<NotificationDTO> getMemberNotifications(@PathVariable Long memberId) {
+        log.info("GET /notifications/{}", memberId);
+        return notificationService.getNotificationsForMember(memberId);
+    }
 }

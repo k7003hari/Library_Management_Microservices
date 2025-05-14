@@ -10,6 +10,6 @@ import com.cts.dto.MemberDTO;
 public interface MemberClient {
 
 	// This method will call the Member Service's endpoint to get member by email
-	@GetMapping("/api/members/email")
+	@GetMapping("/members/email")
 	MemberDTO getMemberByEmail(@RequestParam("email") String email);
 }

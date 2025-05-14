@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.cts.model.BorrowingTransaction;
 
 public interface BorrowingRepository extends JpaRepository<BorrowingTransaction, Long> {
+
 	List<BorrowingTransaction> findByMemberIdAndStatus(Long memberId, BorrowingTransaction.Status status);
 
 	Optional<BorrowingTransaction> findByBookIdAndMemberIdAndStatus(Long bookId, Long memberId,

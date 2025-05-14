@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.cts.dto.BookDTO;
 import com.cts.dto.MemberDTO;
 import com.cts.exception.BookNotFoundException;
 import com.cts.exception.UnauthorizedAccessException;
@@ -13,105 +12,105 @@ import com.cts.feign.MemberClient;
 import com.cts.model.Book;
 import com.cts.repository.BookRepository;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Slf4j
 public class BookServiceImpl implements BookService {
- 
-    private final BookRepository repository;
-    private final MemberClient memberClient;
- 
-    @Override
-    public BookDTO addBook(BookDTO dto) {
-        Book book = mapToEntity(dto);
-        Book saved = repository.save(book);
-log.info("Book added with ID {}", saved.getBookId());
-        return mapToDTO(saved);
-    }
- 
-    @Override
-    public BookDTO updateBook(Long id, BookDTO dto) {
-        Book book = repository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
-        book.setTitle(dto.getTitle());
-        book.setAuthor(dto.getAuthor());
-        book.setGenre(dto.getGenre());
-        book.setIsbn(dto.getIsbn());
-        book.setYearPublished(dto.getYearPublished());
-        book.setAvailableCopies(dto.getAvailableCopies());
-        repository.save(book);
-log.info("Book updated with ID {}", id);
-        return mapToDTO(book);
-    }
- 
-    @Override
-    public void deleteBook(Long id) {
-        if (!repository.existsById(id)) {
-            throw new BookNotFoundException("Book not found with ID: " + id);
-        }
-        repository.deleteById(id);
-log.info("Book deleted with ID {}", id);
-    }
- 
-    @Override
-    public BookDTO getBook(Long id) {
-        return repository.findById(id)
-                .map(this::mapToDTO)
-                .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + id));
-    }
- 
-    @Override
-    public List<BookDTO> searchByTitle(String title) {
-        return repository.findByTitleContainingIgnoreCase(title).stream()
-                .map(this::mapToDTO).collect(Collectors.toList());
-    }
- 
-    @Override
-    public List<BookDTO> searchByAuthor(String author) {
-        return repository.findByAuthorContainingIgnoreCase(author).stream()
-                .map(this::mapToDTO).collect(Collectors.toList());
-    }
- 
-    @Override
-    public List<BookDTO> searchByGenre(String genre) {
-        return repository.findByGenreContainingIgnoreCase(genre).stream()
-                .map(this::mapToDTO).collect(Collectors.toList());
-    }
- 
-    @Override
-    public BookDTO getBookForMember(Long bookId, String memberEmail) {
-        MemberDTO member = memberClient.getMemberByEmail(memberEmail);
-        if (member == null || !"ACTIVE".equalsIgnoreCase(member.getMembershipStatus())) {
-            throw new UnauthorizedAccessException("Member is not authorized to access books.");
-        }
-        Book book = repository.findById(bookId)
-                .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + bookId));
-        return mapToDTO(book);
-    }
- 
-    private Book mapToEntity(BookDTO dto) {
-        return Book.builder()
-                .title(dto.getTitle())
-                .author(dto.getAuthor())
-                .genre(dto.getGenre())
-                .isbn(dto.getIsbn())
-                .yearPublished(dto.getYearPublished())
-                .availableCopies(dto.getAvailableCopies())
-                .build();
-    }
- 
-    private BookDTO mapToDTO(Book book) {
-        return BookDTO.builder()
-                .bookId(book.getBookId())
-                .title(book.getTitle())
-                .author(book.getAuthor())
-                .genre(book.getGenre())
-                .isbn(book.getIsbn())
-                .yearPublished(book.getYearPublished())
-                .availableCopies(book.getAvailableCopies())
-                .build();
-    }
+
+	private final BookRepository repository;
+	private final MemberClient memberClient;
+
+	@Override
+	public Book addBook(Book book) {
+		log.info("Attempting to add new book with title: {}", book.getTitle());
+		Book saved = repository.save(book);
+		log.info("Book added successfully with ID: {}", saved.getBookId());
+		return saved;
+	}
+
+	@Override
+	public Book updateBook(Long id, Book book) {
+		log.info("Attempting to update book with ID: {}", id);
+		Book existingBook = repository.findById(id).orElseThrow(() -> {
+			log.error("Update failed: Book not found with ID: {}", id);
+			return new BookNotFoundException("Book not found with ID: " + id);
+		});
+		existingBook.setTitle(book.getTitle());
+		existingBook.setAuthor(book.getAuthor());
+		existingBook.setGenre(book.getGenre());
+		existingBook.setIsbn(book.getIsbn());
+		existingBook.setYearPublished(book.getYearPublished());
+		existingBook.setAvailableCopies(book.getAvailableCopies());
+		repository.save(existingBook);
+		log.info("Book updated successfully with ID: {}", id);
+		return existingBook;
+	}
+
+	@Override
+	public void deleteBook(Long id) {
+		log.info("Attempting to delete book with ID: {}", id);
+		if (!repository.existsById(id)) {
+			log.error("Delete failed: Book not found with ID: {}", id);
+			throw new BookNotFoundException("Book not found with ID: " + id);
+		}
+		repository.deleteById(id);
+		log.info("Book deleted successfully with ID: {}", id);
+	}
+
+	@Override
+	public Book getBook(Long id) {
+		log.debug("Fetching book with ID: {}", id);
+		return repository.findById(id).orElseThrow(() -> {
+			log.error("Book not found with ID: {}", id);
+			return new BookNotFoundException("Book not found with ID: " + id);
+		});
+	}
+
+	@Override
+	public List<Book> searchByTitle(String title) {
+		log.debug("Searching books with title containing: {}", title);
+		return repository.findByTitleContainingIgnoreCase(title).stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Book> searchByAuthor(String author) {
+		log.debug("Searching books with author containing: {}", author);
+		return repository.findByAuthorContainingIgnoreCase(author).stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Book> searchByGenre(String genre) {
+		log.debug("Searching books with genre containing: {}", genre);
+		return repository.findByGenreContainingIgnoreCase(genre).stream().collect(Collectors.toList());
+	}
+
+	@Override
+	public Book getBookForMember(Long bookId, String memberEmail) {
+		log.debug("Fetching book with ID: {} for member with email: {}", bookId, memberEmail);
+		MemberDTO member = memberClient.getMemberByEmail(memberEmail);
+		if (member == null || !"ACTIVE".equalsIgnoreCase(member.getMembershipStatus())) {
+			log.error("Unauthorized access attempt by member with email: {}", memberEmail);
+			throw new UnauthorizedAccessException("Member is not authorized to access books.");
+		}
+		return repository.findById(bookId).orElseThrow(() -> {
+			log.error("Book not found with ID: {}", bookId);
+			return new BookNotFoundException("Book not found with ID: " + bookId);
+		});
+	}
+
+	@Override
+	public void updateBookCopies(Long id, int availableCopies) {
+		log.info("Attempting to update available copies for book with ID: {}", id);
+		Book book = repository.findById(id).orElseThrow(() -> {
+			log.error("Update failed: Book not found with ID: {}", id);
+			return new BookNotFoundException("Book not found with ID: " + id);
+		});
+		book.setAvailableCopies(availableCopies);
+		repository.save(book);
+		log.info("Updated available copies for book with ID: {}", id);
+	}
+
 }

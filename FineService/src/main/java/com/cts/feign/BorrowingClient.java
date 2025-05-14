@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cts.dto.BorrowingTransactionDTO;
 
-@FeignClient(name = "borrowing-service")
+@FeignClient(name = "BORROWINGSERVICE", path = "/borrowings")
 public interface BorrowingClient {
 
-   @GetMapping("borrow/{memberId}")
-   List<BorrowingTransactionDTO> getBorrowedBooksByMember(@PathVariable("memberId") Long memberId);
+    @GetMapping("/{memberId}")
+    List<BorrowingTransactionDTO> getBorrowedBooksByMember(@PathVariable("memberId") Long memberId);
 }
+

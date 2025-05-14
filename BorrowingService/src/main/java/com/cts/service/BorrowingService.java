@@ -2,13 +2,14 @@ package com.cts.service;
 
 import java.util.List;
 
-import com.cts.dto.BorrowingTransactionDTO;
+import com.cts.model.BorrowingTransaction;
 
 public interface BorrowingService {
 
-	BorrowingTransactionDTO borrowBook(Long memberId, Long bookId);
+	BorrowingTransaction borrowBook(Long memberId, Long bookId);
 
-	BorrowingTransactionDTO returnBook(Long memberId, Long bookId);
+	BorrowingTransaction returnBook(Long memberId, Long bookId);
+	
 
-	List<BorrowingTransactionDTO> getMemberBorrowedBooks(Long memberId);
+	List<BorrowingTransaction> getMemberBorrowedBooks(Long memberId);
 }

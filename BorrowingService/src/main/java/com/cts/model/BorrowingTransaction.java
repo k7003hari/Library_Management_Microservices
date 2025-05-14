@@ -10,29 +10,31 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class BorrowingTransaction {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Ensures auto-increment works
+    private Long id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long transactionId;
+    private Long memberId;
+    private Long bookId;
+    private LocalDate borrowDate;
+    private LocalDate returnDate;
 
-	private Long bookId;
-	private Long memberId;
-	private LocalDate borrowDate;
-	private LocalDate returnDate;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-	@Enumerated(EnumType.STRING)
-	private Status status;
-
-	public enum Status {
-		BORROWED, RETURNED
-	}
+    public enum Status {
+        BORROWED,
+        RETURNED
+    }
 }

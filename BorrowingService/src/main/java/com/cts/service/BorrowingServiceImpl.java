@@ -2,70 +2,84 @@ package com.cts.service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.cts.dto.BorrowingTransactionDTO;
 import com.cts.exception.BorrowingNotAllowedException;
 import com.cts.exception.BorrowingTransactionNotFoundException;
 import com.cts.feign.BookClient;
 import com.cts.feign.MemberClient;
 import com.cts.model.BorrowingTransaction;
+import com.cts.model.BorrowingTransaction.Status;
 import com.cts.repository.BorrowingRepository;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
+@AllArgsConstructor
 public class BorrowingServiceImpl implements BorrowingService {
+
+	private static final Logger logger = LoggerFactory.getLogger(BorrowingServiceImpl.class);
 
 	private final BorrowingRepository repository;
 	private final BookClient bookClient;
 	private final MemberClient memberClient;
 
 	@Override
-	public BorrowingTransactionDTO borrowBook(Long memberId, Long bookId) {
-		memberClient.getMember(memberId); // Ensure member exists
-		bookClient.getBook(bookId); // Ensure book exists
+    public BorrowingTransaction borrowBook(Long memberId, Long bookId) {
+        logger.info("Attempting to borrow book with ID: {} for member ID: {}", bookId, memberId);
 
-		long activeBorrowings = repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED)
-				.size();
-		if (activeBorrowings >= 5) {
-			throw new BorrowingNotAllowedException("Borrowing limit exceeded");
-		}
+        memberClient.getMember(memberId); // Ensure member exists
+        bookClient.getBook(bookId); // Ensure book exists
 
-		BorrowingTransaction tx = BorrowingTransaction.builder().bookId(bookId).memberId(memberId)
-				.borrowDate(LocalDate.now()).status(BorrowingTransaction.Status.BORROWED).build();
+        long activeBorrowings = repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED).size();
+        if (activeBorrowings >= 5) {
+            logger.warn("Borrowing limit exceeded for member ID: {}", memberId);
+            throw new BorrowingNotAllowedException("Borrowing limit exceeded");
+        }
 
-		repository.save(tx);
-		return mapToDTO(tx);
-	}
+        BorrowingTransaction tx = BorrowingTransaction.builder()
+                .bookId(bookId)
+                .memberId(memberId)
+                .borrowDate(LocalDate.now())
+                .status(BorrowingTransaction.Status.BORROWED)
+                .build();
 
-	@Override
-	public BorrowingTransactionDTO returnBook(Long memberId, Long bookId) {
-		BorrowingTransaction tx = repository
-				.findByBookIdAndMemberIdAndStatus(bookId, memberId, BorrowingTransaction.Status.BORROWED)
-				.orElseThrow(() -> new BorrowingTransactionNotFoundException("No active borrowing found"));
-
-		tx.setStatus(BorrowingTransaction.Status.RETURNED);
-		tx.setReturnDate(LocalDate.now());
-		repository.save(tx);
-
-		return mapToDTO(tx);
-	}
+        repository.save(tx);
+        logger.info("Book borrowed successfully: Book ID={}, Member ID={}", bookId, memberId);
+        return tx;
+    }
 
 	@Override
-	public List<BorrowingTransactionDTO> getMemberBorrowedBooks(Long memberId) {
-		return repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED).stream()
-				.map(this::mapToDTO).collect(Collectors.toList());
-	}
+    public BorrowingTransaction returnBook(Long memberId, Long bookId) {
+        logger.info("Attempting to return book with ID: {} for member ID: {}", bookId, memberId);
 
-	private BorrowingTransactionDTO mapToDTO(BorrowingTransaction tx) {
-		return BorrowingTransactionDTO.builder().transactionId(tx.getTransactionId()).bookId(tx.getBookId())
-				.memberId(tx.getMemberId()).borrowDate(tx.getBorrowDate()).returnDate(tx.getReturnDate())
-				.status(tx.getStatus().name()).build();
-	}
+        BorrowingTransaction tx = repository.findByBookIdAndMemberIdAndStatus(bookId, memberId, BorrowingTransaction.Status.BORROWED)
+                .orElseThrow(() -> {
+                    logger.error("No active borrowing found for book ID: {} and member ID: {}", bookId, memberId);
+                    return new BorrowingTransactionNotFoundException("No active borrowing found");
+                });
+
+        tx.setStatus(BorrowingTransaction.Status.RETURNED);
+        tx.setReturnDate(LocalDate.now());
+        repository.save(tx);
+
+        logger.info("Book returned successfully: Book ID={}, Member ID={}", bookId, memberId);
+        return tx;
+    }
+
+	@Override
+    public List<BorrowingTransaction> getMemberBorrowedBooks(Long memberId) {
+        logger.debug("Fetching borrowed books for member ID: {}", memberId);
+
+        List<BorrowingTransaction> borrowedBooks = repository.findByMemberIdAndStatus(memberId, BorrowingTransaction.Status.BORROWED);
+
+        logger.info("Retrieved {} borrowed books for member ID: {}", borrowedBooks.size(), memberId);
+        return borrowedBooks;
+    }
+
 }

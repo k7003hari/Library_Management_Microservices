@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cts.dto.MemberDTO;
 
-@FeignClient(name = "MEMBER-SERVICE")
+@FeignClient(name = "MEMBERSERVICE", path="/members")
 public interface MemberClient {
-    @GetMapping("/members/{id}")
+    @GetMapping("/{id}")
     Object getMember(@PathVariable Long id);
 }

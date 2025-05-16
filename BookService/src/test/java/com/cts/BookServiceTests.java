@@ -69,7 +69,7 @@ class BookServiceTests {
     @Test
     void testGetBook() {
         Book saved = bookService.addBook(sampleBook);
-        Book found = bookService.getBook(saved.getBookId());
+        Book found = bookService.getBookById(saved.getBookId());
         assertEquals("Clean Code", found.getTitle());
     }
 }

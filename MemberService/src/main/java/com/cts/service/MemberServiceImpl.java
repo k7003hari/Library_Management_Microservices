@@ -1,5 +1,6 @@
 package com.cts.service;
 
+import java.awt.print.Book;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -41,6 +42,12 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(existingMember);
 		log.info("Member updated successfully with ID: {}", memberId);
 		return existingMember;
+	}
+	
+	@Override
+	public List<Member> getAllMember() {
+	    log.debug("Fetching all Member");
+	    return memberRepository.findAll();
 	}
 
 	@Override

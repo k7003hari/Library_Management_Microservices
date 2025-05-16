@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,52 +23,57 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BookController {
 
-    private final BookService bookService;
+	private final BookService bookService;
 
-    @PostMapping("/addbook")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Book addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
-    }
+	@PostMapping("/addbook")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Book addBook(@RequestBody Book book) {
+		return bookService.addBook(book);
+	}
 
-    @PutMapping("/update/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
-        return bookService.updateBook(id, book);
-    }
+	@PutMapping("/update/{id}")
+	public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
+		return bookService.updateBook(id, book);
+	}
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteBook(@PathVariable Long id) {
-        bookService.deleteBook(id);
-    }
+	@DeleteMapping("/delete/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteBook(@PathVariable Long id) {
+		bookService.deleteBook(id);
+	}
 
-    @GetMapping("/getById/{id}")
-    public Book getBook(@PathVariable Long id) {
-        return bookService.getBook(id);
-    }
+	@GetMapping("/getall")
+	public List<Book> getAllBooks() {
+		return bookService.getAllBooks();
+	}
 
-    @GetMapping("/search/title/{title}")
-    public List<Book> searchByTitle(@PathVariable("title") String title) {
-        return bookService.searchByTitle(title);
-    }
+	@GetMapping("/getById/{id}")
+	public Book getBookById(@PathVariable Long id) {
+		return bookService.getBookById(id);
+	}
 
-    @GetMapping("/search/author/{author}")
-    public List<Book> searchByAuthor(@PathVariable("author") String author) {
-        return bookService.searchByAuthor(author);
-    }
+	@GetMapping("/search/title/{title}")
+	public List<Book> searchByTitle(@PathVariable("title") String title) {
+		return bookService.searchByTitle(title);
+	}
 
-    @GetMapping("/search/genre/{genre}")
-    public List<Book> searchByGenre(@PathVariable("genre") String genre) {
-        return bookService.searchByGenre(genre);
-    }
+	@GetMapping("/search/author/{author}")
+	public List<Book> searchByAuthor(@PathVariable("author") String author) {
+		return bookService.searchByAuthor(author);
+	}
 
-    @GetMapping("/member/{id}/{Email}")
-    public Book getBookForMember(@PathVariable Long id, @PathVariable("Email") String memberEmail) {
-        return bookService.getBookForMember(id, memberEmail);
-    }
+	@GetMapping("/search/genre/{genre}")
+	public List<Book> searchByGenre(@PathVariable("genre") String genre) {
+		return bookService.searchByGenre(genre);
+	}
 
-    @PutMapping("/{id}/copies")
-    public void updateBookCopies(@PathVariable Long id, @PathVariable ("count")int availableCopies) {
-        bookService.updateBookCopies(id, availableCopies);
-    }
+	@GetMapping("/member/{id}/{Email}")
+	public Book getBookForMember(@PathVariable Long id, @PathVariable("Email") String memberEmail) {
+		return bookService.getBookForMember(id, memberEmail);
+	}
+
+	@PutMapping("/{id}/copies")
+	public void updateBookCopies(@PathVariable Long id, @PathVariable("count") int availableCopies) {
+		bookService.updateBookCopies(id, availableCopies);
+	}
 }

@@ -30,6 +30,13 @@ public class BookServiceImpl implements BookService {
 		log.info("Book added successfully with ID: {}", saved.getBookId());
 		return saved;
 	}
+	
+	@Override
+	public List<Book> getAllBooks() {
+	    log.debug("Fetching all books");
+	    return repository.findAll();
+	}
+
 
 	@Override
 	public Book updateBook(Long id, Book book) {
@@ -61,13 +68,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book getBook(Long id) {
+	public Book getBookById(Long id) {
 		log.debug("Fetching book with ID: {}", id);
 		return repository.findById(id).orElseThrow(() -> {
 			log.error("Book not found with ID: {}", id);
 			return new BookNotFoundException("Book not found with ID: " + id);
 		});
 	}
+	
+
 
 	@Override
 	public List<Book> searchByTitle(String title) {

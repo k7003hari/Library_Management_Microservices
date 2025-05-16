@@ -11,7 +11,9 @@ public interface BookService {
 
 	void deleteBook(Long id);
 
-	Book getBook(Long id);
+	Book getBookById(Long id);
+
+	List<Book> getAllBooks();
 
 	List<Book> searchByTitle(String title);
 
@@ -20,8 +22,7 @@ public interface BookService {
 	List<Book> searchByGenre(String genre);
 
 	Book getBookForMember(Long bookId, String memberEmail);
-	
-	 void updateBookCopies(Long id, int availableCopies);
-	
-	
+
+	void updateBookCopies(Long id, int availableCopies);
+
 }

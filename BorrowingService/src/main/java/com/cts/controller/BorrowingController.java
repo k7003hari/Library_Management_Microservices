@@ -26,7 +26,7 @@ public class BorrowingController {
 	// Borrow a book
 	@PostMapping("/borrow")
 	public BorrowingTransaction borrowBook(@RequestBody BorrowingTransactionDTO transactionDTO) {
-	    return borrowingService.borrowBook(transactionDTO.getMemberId(), transactionDTO.getBookId());
+	    return borrowingService.borrowBook(transactionDTO);
 	}
 
     // Return a book

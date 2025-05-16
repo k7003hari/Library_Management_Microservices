@@ -23,15 +23,24 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Override
 	public NotificationDTO sendNotification(NotificationDTO dto) {
-		log.info("Sending notification to member ID: {}", dto.getMemberId());
-		Notification notification = Notification.builder().memberId(dto.getMemberId()).message(dto.getMessage())
-				.dateSent(LocalDate.now()).build();
+	    try {
+	        log.info("Sending notification to member ID: {}", dto.getMemberId());
+	        Notification notification = Notification.builder()
+	                .memberId(dto.getMemberId())
+	                .message(dto.getMessage())
+	                .dateSent(LocalDate.now())
+	                .build();
 
-		Notification saved = notificationRepository.save(notification);
-		log.info("Notification sent successfully to member ID: {}", dto.getMemberId());
-		return new NotificationDTO(saved.getNotificationId(), saved.getMemberId(), saved.getMessage(),
-				saved.getDateSent());
+	        Notification saved = notificationRepository.save(notification);
+	        log.info("Notification sent successfully to member ID: {}", dto.getMemberId());
+	        return new NotificationDTO(saved.getNotificationId(), saved.getMemberId(), saved.getMessage(), saved.getDateSent());
+	    } catch (Exception e) {
+	        log.error("Error sending notification", e);
+	        throw new RuntimeException("Something went wrong");
+	    }
 	}
+
+
 
 	@Override
 	public List<NotificationDTO> getNotificationsForMember(Long memberId) {

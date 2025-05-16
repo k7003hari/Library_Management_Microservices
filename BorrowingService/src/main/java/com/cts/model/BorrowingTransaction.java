@@ -27,7 +27,9 @@ public class BorrowingTransaction {
 
     private Long memberId;
     private Long bookId;
+    
     private LocalDate borrowDate;
+    
     private LocalDate returnDate;
 
     @Enumerated(EnumType.STRING)

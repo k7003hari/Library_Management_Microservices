@@ -26,9 +26,16 @@ public class NotificationController {
 
     @PostMapping("/send")
     public NotificationDTO sendNotification(@Valid @RequestBody NotificationDTO notificationDTO) {
-        log.info("POST /notifications/send");
-        return notificationService.sendNotification(notificationDTO);
+        try {
+            log.info("POST /notifications/send");
+            return notificationService.sendNotification(notificationDTO);
+        } catch (Exception e) {
+            log.error("Error sending notification", e);
+            throw new RuntimeException("Something went wrong");
+        }
     }
+
+
 
     @GetMapping("/{memberId}")
     public List<NotificationDTO> getMemberNotifications(@PathVariable Long memberId) {

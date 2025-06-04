@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cts.dto.BorrowingTransactionDTO;
@@ -41,4 +40,10 @@ public class BorrowingController {
     public List<BorrowingTransaction> getBorrowedBooks(@PathVariable Long memberId) {
         return borrowingService.getMemberBorrowedBooks(memberId);
     }
+    
+    //get all borrowed books
+    @GetMapping("/getall")
+	public List<BorrowingTransaction> getAllBorrows() {
+		return borrowingService.getAllBorrows();
+	}
 }

@@ -13,4 +13,7 @@ public interface BorrowingRepository extends JpaRepository<BorrowingTransaction,
 
 	Optional<BorrowingTransaction> findByBookIdAndMemberIdAndStatus(Long bookId, Long memberId,
 			BorrowingTransaction.Status status);
+	
+//	List<BorrowingTransaction> findAll();
+
 }

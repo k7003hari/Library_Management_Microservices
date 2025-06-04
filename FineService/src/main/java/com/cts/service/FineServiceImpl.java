@@ -3,11 +3,13 @@ package com.cts.service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.ctc.exception.FineNotFoundException;
+import com.ctc.exception.NoFineDueException;
 import com.ctc.exception.UnauthorizedAccessException;
 import com.cts.dto.BorrowingTransactionDTO;
 import com.cts.dto.FineDTO;
@@ -30,38 +32,45 @@ public class FineServiceImpl implements FineService {
 
     @Override
     public FineDTO calculateFine(Long memberId) {
-        log.info("Calculating fine for member ID: {}", memberId);
+    log.info("Calculating fine for member ID: {}", memberId);
         List<BorrowingTransactionDTO> borrowedBooks = borrowingClient.getBorrowedBooksByMember(memberId);
-
+     
         BigDecimal totalFine = BigDecimal.ZERO;
+     
         for (BorrowingTransactionDTO transaction : borrowedBooks) {
             long overdueDays = calculateOverdueDays(transaction.getReturnDate());
             if (overdueDays > 0) {
                 totalFine = totalFine.add(BigDecimal.valueOf(overdueDays).multiply(new BigDecimal("1.00")));
             }
         }
-
+     
+        if (totalFine.compareTo(BigDecimal.ZERO) <= 0) {
+    log.info("No fine applicable for member ID: {}", memberId);
+            throw new NoFineDueException("No fine due at this time.");
+        }
+     
+        // Save fine
         Fine fine = Fine.builder()
                 .memberId(memberId)
                 .amount(totalFine)
                 .status(Fine.FineStatus.PENDING)
                 .transactionDate(LocalDate.now())
                 .build();
-
+     
         fineRepository.save(fine);
-        log.info("Fine calculated for member ID: {}", memberId);
-        return new FineDTO(fine.getFineId(), memberClient.getMemberById(memberId), fine.getAmount(), fine.getStatus().name(), fine.getTransactionDate());
-    }
-
-    private long calculateOverdueDays(LocalDate returnDate) {
-        if (returnDate == null || returnDate.isBefore(LocalDate.now())) {
-            return returnDate == null ? 0 : returnDate.until(LocalDate.now()).getDays();
-        }
-        return 0;
+    log.info("Fine of {} saved for member ID: {}", totalFine, memberId);
+     
+        return new FineDTO(
+                fine.getFineId(),
+                memberClient.getMemberById(memberId),
+                fine.getAmount(),
+                fine.getStatus().name(),
+                fine.getTransactionDate()
+        );
     }
 
     @Override
-    public void payFine(Long memberId, Long fineId) {
+    public FineDTO payFine(Long memberId, Long fineId) {
         log.info("Paying fine with ID: {} for member ID: {}", fineId, memberId);
         Fine fine = fineRepository.findById(fineId)
                 .orElseThrow(() -> new FineNotFoundException("Fine not found with ID: " + fineId));
@@ -74,7 +83,14 @@ public class FineServiceImpl implements FineService {
         fine.setStatus(Fine.FineStatus.PAID);
         fineRepository.save(fine);
         log.info("Fine paid for member ID: {}", memberId);
+        return new FineDTO(
+                fine.getFineId(),
+                memberClient.getMemberById(memberId),
+                fine.getAmount(),
+                fine.getStatus().name(),
+                fine.getTransactionDate());
     }
+
 
     @Override
     public List<FineDTO> getAllFines() {
@@ -83,5 +99,12 @@ public class FineServiceImpl implements FineService {
         return fines.stream()
                 .map(fine -> new FineDTO(fine.getFineId(), memberClient.getMemberById(fine.getMemberId()), fine.getAmount(), fine.getStatus().name(), fine.getTransactionDate()))
                 .collect(Collectors.toList());
+    }
+    
+    private long calculateOverdueDays(LocalDate returnDate) {
+        if (returnDate == null || returnDate.isBefore(LocalDate.now())) {
+            return returnDate == null ? 0 : returnDate.until(LocalDate.now()).getDays();
+        }
+        return 0;
     }
 }

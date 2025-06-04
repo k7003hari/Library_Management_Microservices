@@ -8,7 +8,7 @@ public interface FineService {
 
 	FineDTO calculateFine(Long memberId);
 
-	void payFine(Long memberId, Long fineId);
+	FineDTO payFine(Long memberId, Long fineId);
 
 	List<FineDTO> getAllFines();
 }

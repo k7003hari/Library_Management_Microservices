@@ -24,4 +24,9 @@ public class GlobalExceptionHandler {
 	public ErrorResponse handleGenericException(Exception ex, HttpServletRequest request) {
 		return new ErrorResponse("INTERNAL_SERVER_ERROR", "An unexpected error occurred.", request.getRequestURI());
 	}
+	
+	 @ExceptionHandler(NoFineDueException.class)
+	    public String handleNoFineException(NoFineDueException ex) {
+	        return ex.getMessage(); // returns "No fine applicable."
+	}
 }

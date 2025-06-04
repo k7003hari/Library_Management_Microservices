@@ -12,4 +12,6 @@ public interface BorrowingService {
 	BorrowingTransaction returnBook(Long memberId, Long bookId);	
 
 	List<BorrowingTransaction> getMemberBorrowedBooks(Long memberId);
+	
+	List<BorrowingTransaction> getAllBorrows();
 }
